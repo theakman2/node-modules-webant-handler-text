@@ -12,24 +12,23 @@ If for some reason you'd like to use the module outside of webant, install as fo
 
 ## Usage
 
-Ensure the `text` handler is present in your webant configuration file.
-
-An example configuration file which uses this handler may look like this:
+Ensure the `text` handler is present in your webant configuration file. For example:
 
 ````json
 {
-    "jsEntryPath":"%%base%%/src/js/main.js",
-    "jsDestPath":"%%base%%/build/main.js",
+    "entry":"src/js/main.js",
+    "dest":"build/main.js",
     "handlers":{
         "text":{}
     }
 }
 ````
 
-You may now `require` text or HTML files via the function style:
+You may now `require` text or HTML files:
 
 ````javascript
 var html = require("../path/to/some.html");
+var moreHtml = require("path/to/more.htm");
 var text = require("foo.txt");
 ````
 

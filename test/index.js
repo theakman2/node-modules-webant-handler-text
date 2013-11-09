@@ -1,49 +1,33 @@
 var Handler = require("../lib/index.js");
-var HandlerBase = require("./lib/Handler.js");
 
-function createHandler(Handler,settings) {
-	var handlerBase = new HandlerBase(settings);
-	
-	Handler.prototype = handlerBase;
-	Handler.prototype.constructor = Handler;
-	
-	return new Handler();
-}
-
-var handler = createHandler(Handler,{});
+var handler = new Handler();
 
 var tests = {
-	"test text external url":function(assert,done) {
-		handler.willHandle({
-			filePath:"//google.com/bla.css?foo=bar#fgs"
-		},function(err,yes){
-			assert.strictEqual(err,null,"Handler should not report an error.");
-			assert.strictEqual(yes,false,"Handler should report false.");
-			done();
-		});
+	"test filetypes":function(assert) {
+		var handler = new Handler();
+		var data = [
+		            "https://mysite.co.uk/bla.js",
+		            "//cdn.google.com/path/to/assets.css",
+		            "path/to/assets.htm",
+		            "/abs/path/to/assets.txt",
+		            "path/to/assets.html",
+		            "/abs/path/to/assets.html",
+		            "@@hbs/runtime",
+		            "@@css/addStylesheet"
+		            ];
+		assert.deepEqual(
+			data.map(handler.willHandle),
+			[false,false,true,true,true,true,false,false],
+			"Should handle the correct files."
+		);
 	},
-	"test text wrong file type":function(assert,done) {
-		handler.willHandle({
-			filePath:__dirname+"/path/to/javascript.js",
-		},function(err,yes){
-			assert.strictEqual(err,null,"Handler should not report an error.");
-			assert.strictEqual(yes,false,"Handler should report false.");
-			done();
-		});
-	},
-	"test text correct file type":function(assert,done) {
-		handler.handle({
-			filePath:__dirname+"/data.txt",
-			requireType:"function",
-			raw:"./data.txt"
-		},function(data){
-			assert.deepEqual(
-				data,
-				{
-					type:"internalJs",
-					content:'module.exports = "It\'s a test!";'
-				},
-				"Handler should update with correct data."
+	"test content":function(assert,done) {
+		handler.handle(__dirname+"/data.txt",function(err,content){
+			assert.ok(!err,"There should be no errors handling this require.");
+			assert.equal(
+				content,
+				"module.exports = 'It\\'s a test!';",
+				"Handler should return the right content."
 			);
 			done();
 		});
