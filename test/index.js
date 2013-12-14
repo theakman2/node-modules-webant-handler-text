@@ -1,10 +1,7 @@
-var Handler = require("../lib/index.js");
-
-var handler = new Handler();
+var handler = require("../lib/index.js");
 
 var tests = {
 	"test filetypes":function(assert) {
-		var handler = new Handler();
 		var data = [
 		            "https://mysite.co.uk/bla.js",
 		            "//cdn.google.com/path/to/assets.css",
@@ -16,13 +13,13 @@ var tests = {
 		            "@@css/addStylesheet"
 		            ];
 		assert.deepEqual(
-			data.map(handler.willHandle),
+			data.map(function(fp){ return handler.willHandle(fp);}),
 			[false,false,true,true,true,true,false,false],
 			"Should handle the correct files."
 		);
 	},
 	"test content":function(assert,done) {
-		handler.handle(__dirname+"/data.txt",function(err,content){
+		handler.handle(__dirname+"/data.txt",{},function(err,content){
 			assert.ok(!err,"There should be no errors handling this require.");
 			assert.equal(
 				content,

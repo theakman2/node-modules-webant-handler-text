@@ -32,6 +32,6 @@ var moreHtml = require("path/to/more.htm");
 var text = require("foo.txt");
 ````
 
-## Tests
+## Tests [![Build Status](https://travis-ci.org/theakman2/node-modules-webant-handler-text.png?branch=master)](https://travis-ci.org/theakman2/node-modules-webant-handler-text)
 
     $ npm test
