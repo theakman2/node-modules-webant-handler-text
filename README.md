@@ -4,10 +4,6 @@ _Require text and HTML files with [webant](https://github.com/theakman2/node-mod
 
 ## Installation
 
-There should be no need to install this module since it's required by the [webant](https://github.com/theakman2/node-modules-webant) module by default.
-
-If for some reason you'd like to use the module outside of webant, install as follows:
-
     $ npm install webant-handler-text
 
 ## Usage
@@ -18,9 +14,7 @@ Ensure the `text` handler is present in your webant configuration file. For exam
 {
     "entry":"src/js/main.js",
     "dest":"build/main.js",
-    "handlers":{
-        "text":{}
-    }
+    "handlers":["text"]
 }
 ````
 
@@ -33,5 +27,7 @@ var text = require("foo.txt");
 ````
 
 ## Tests [![Build Status](https://travis-ci.org/theakman2/node-modules-webant-handler-text.png?branch=master)](https://travis-ci.org/theakman2/node-modules-webant-handler-text)
+
+Ensure [phantomjs](http://phantomjs.org) is installed and in your PATH, then run:
 
     $ npm test
